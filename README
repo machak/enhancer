@@ -1,0 +1,13 @@
+# installing maven dependencies:
+
+* linux:
+
+1) edit dependencies.sh file and change Intellij location paths
+2) run following commands:
+
+chmod +x dependencies.sh
+./dependencies.sh
+
+* windows 
+1) edit dependencies.bat file and change Intellij location paths
+2) run dependencies.bat
