@@ -250,7 +250,9 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
         try {
             affectedModules = this.getAffectedModulesGuiModel();
             metaDataFiles = this.createMetadataFilesGuiModel();
+            // filter files:
             annotatedClassFiles = this.createAnnotatedClassFilesGuiModel();
+            applyFilter(annotatedClassFiles, this.state.getEnabledFiles());
             indexReady = true;
         } catch (IndexNotReadyException ignored) {
             affectedModules = new ArrayList<AffectedModule>(0);
@@ -269,6 +271,16 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
                 affectedModules,
                 metaDataFiles,
                 annotatedClassFiles);
+    }
+
+    private void applyFilter(List<MetaDataOrClassFile> annotatedClassFiles, Set<String> enabledFiles) {
+        for (MetaDataOrClassFile file : annotatedClassFiles) {
+            if (enabledFiles.contains(file.getClassName())) {
+                file.setEnabled(true);
+            } else {
+                file.setEnabled(false);
+            }
+        }
     }
 
     @SuppressWarnings("FeatureEnvy")

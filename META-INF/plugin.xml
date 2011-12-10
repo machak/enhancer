@@ -1,0 +1,38 @@
+<idea-plugin version="2">
+  <id>OpenJpaIntegration</id>
+  <name>OpenJpa Enhancer integration</name>
+  <description><![CDATA[
+
+    ]]></description>
+  <version>1.00.00</version>
+  <change-notes><![CDATA[
+        <p>
+         <b>1.00.00</b><br/>
+         - initial release
+        </p>
+    ]]></change-notes>
+  <vendor url="https://github.com/machak">m.milicevic</vendor>
+  <idea-version since-build="8000"/>
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <component>
+      <implementation-class>org.openjpa.ide.idea.ProjectComponent</implementation-class>
+    </component>
+  </project-components>
+
+  <actions>
+    <action id="ToggleDataOpenJpaEnhancer" class="org.openjpa.ide.idea.ToggleEnableAction" text="OpenJpa Enhancer"
+            description="Enable/Disable OpenJpa class enhancing">
+      <add-to-group group-id="BuildMenu" anchor="after" relative-to-action="Compile"/>
+    </action>
+  </actions>
+
+  <extensionPoints>
+    <extensionPoint name="openjpaEnhancerExtension" interface="org.openjpa.ide.idea.integration.EnhancerSupport"/>
+  </extensionPoints>
+
+</idea-plugin>
