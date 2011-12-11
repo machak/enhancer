@@ -3,6 +3,9 @@ package org.openjpa.ide.idea.integration.openjpa;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.module.Module;
@@ -11,7 +14,6 @@ import org.apache.openjpa.lib.util.Options;
 import org.openjpa.ide.idea.PersistenceApi;
 import org.openjpa.ide.idea.integration.AbstractEnhancerProxy;
 import org.openjpa.ide.idea.integration.ClassLoaderFactory;
-import org.openjpa.ide.idea.util.InternalReflectionHelper;
 
 
 public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
@@ -20,8 +22,9 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
     public static final String OPEN_JPA_ENHANCER_CLASS = "PCEnhancer";
     public static final String OPEN_JPA_GENERIC_ENHANCER_CLASS_FQ = "org.apache.openjpa.enhance." + OPEN_JPA_ENHANCER_CLASS;
 
-    private final Object enhancer;
+    private final Class<?> enhancerClass;
 
+    private List<String> classes = new ArrayList<String>();
 
     @SuppressWarnings("UnusedParameters")
     public OpenJpaEnhancerProxy(final PersistenceApi api,
@@ -38,12 +41,8 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
         super(api, compileContext, module, persistenceUnitName);
 
         final ClassLoader classLoader = ClassLoaderFactory.newClassLoader(compileContext, module, OpenJpaEnhancerProxy.class);
-        final Class<?> enhancerClass = Class.forName(OPEN_JPA_GENERIC_ENHANCER_CLASS_FQ, true, classLoader);
-        this.enhancer = enhancerClass.newInstance();
-/*
-        this.invokeMethod("setVerbose", new Class[]{Boolean.TYPE}, true);
-        this.invokeMethod("setSystemOut", new Class[]{Boolean.TYPE}, true);
-        this.invokeMethod("setClassLoader", new Class[]{ClassLoader.class}, classLoader);*/
+        enhancerClass = Class.forName(OPEN_JPA_GENERIC_ENHANCER_CLASS_FQ, true, classLoader);
+
     }
 
 
@@ -54,23 +53,17 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
 
     @Override
     public void addClasses(final String... classNames) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        final Object parameter = convertVarargsParameter(classNames);
-        final Object parameterClassesArray = Array.newInstance(String.class, 0);
-
-        invokeMethod("addClasses", new Class[]{parameterClassesArray.getClass()}, parameter);
+        classes.addAll(Arrays.asList(classNames));
     }
 
     @Override
     public void addMetadataFiles(final String... metadataFiles) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        final Object parameter = convertVarargsParameter(metadataFiles);
-        final Object parameterClassesArray = Array.newInstance(String.class, 0);
-
-        invokeMethod("addFiles", new Class[]{parameterClassesArray.getClass()}, parameter);
+        // do nothing
     }
 
     @Override
     public int enhance() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        return (Integer) invokeMethod("enhance", NO_PARAMETER_TYPES);
+        return 0;
     }
 
     @Override
@@ -78,10 +71,6 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
         return "OpenJpaEnhancerProxy";
     }
 
-    private Object invokeMethod(final String methodName, final Class<?>[] parameterTypes, final Object... parameters)
-            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        return InternalReflectionHelper.invokeMethod(this.enhancer, methodName, parameterTypes, parameters);
-    }
 
     private static Object convertVarargsParameter(final String[] metadataFiles) {
         final Object parameter = Array.newInstance(String.class, metadataFiles.length);
