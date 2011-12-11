@@ -254,7 +254,9 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
             metaDataFiles = this.createMetadataFilesGuiModel();
             // filter files:
             annotatedClassFiles = this.createAnnotatedClassFilesGuiModel();
-            applyFilter(annotatedClassFiles, this.state.getEnabledFiles());
+            if (this.state.getEnabledFiles().size() > 0) {
+                applyFilter(annotatedClassFiles, this.state.getEnabledFiles());
+            }
             indexReady = true;
         } catch (IndexNotReadyException ignored) {
             affectedModules = new ArrayList<AffectedModule>(0);

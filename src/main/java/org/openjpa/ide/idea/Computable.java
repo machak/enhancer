@@ -446,6 +446,8 @@ class Computable implements ClassPostProcessingCompiler {
                         : compileScope;
 
                 final Set<String> enabledFiles = Computable.this.state.getEnabledFiles();
+                int size = enabledFiles.size();
+
                 for (final Module module : projectCompileScope.getAffectedModules()) {
                     if (Computable.this.state.getEnabledModules() != null && Computable.this.state.getEnabledModules()
                             .contains(module.getName())) {
@@ -471,7 +473,8 @@ class Computable implements ClassPostProcessingCompiler {
                                     for (final PsiClass annotatedClass : annotatedClasses) {
                                         final String pcClassName = annotatedClass.getQualifiedName();
                                         // skip disabled files
-                                        if (!enabledFiles.contains(pcClassName)) {
+
+                                        if (compileScope != null && !enabledFiles.contains(pcClassName)) {
                                             continue;
                                         }
                                         // convert to path
