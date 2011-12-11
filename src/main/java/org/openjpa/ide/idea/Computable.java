@@ -298,7 +298,7 @@ class Computable implements ClassPostProcessingCompiler {
                     try {
                         // do class enhancement in module
                         count += enhancePerModule(enhancerSupport,
-                                this.state.getApi(),
+                                this.state,
                                 ctx,
                                 module,
                                 outputDirectory,
@@ -322,7 +322,7 @@ class Computable implements ClassPostProcessingCompiler {
 
     @SuppressWarnings("FeatureEnvy")
     private static int enhancePerModule(final EnhancerSupport enhancerSupport,
-                                        final PersistenceApi api,
+                                        final State state,
                                         final CompileContext compileContext,
                                         final Module module,
                                         final VirtualFile outputDirectory,
@@ -352,9 +352,13 @@ class Computable implements ClassPostProcessingCompiler {
 
         final EnhancerProxy enhancer;
         if (doEnhance) {
+
             //final JDOEnhancer enhancer = JDOHelper.getEnhancer(); // does not work due to classloader problems
             //enhancer = new OpenJpaEnhancerProxy(api, compileContext, module);
-            enhancer = enhancerSupport.newEnhancerProxy(api, compileContext, module, null);
+            enhancer = enhancerSupport.newEnhancerProxy(state.getApi(), compileContext, module, null);
+            enhancer.setAddDefaultConstructor(state.isAddDefaultConstructor());
+            enhancer.setEnforcePropertyRestrictions(state.isEnforcePropertyRestrictions());
+
         } else {
             enhancer = null;
         }

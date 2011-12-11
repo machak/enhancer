@@ -21,6 +21,12 @@ import java.lang.reflect.InvocationTargetException;
  */
 public interface EnhancerProxy {
 
+
+    void setAddDefaultConstructor(boolean addDefaultConstructor);
+
+
+    void setEnforcePropertyRestrictions(boolean enforcePropertyRestrictions);
+
     /**
      * Add names of classes annotated by persistence related annotations (e.g. javax.jdo.annotations.PersistenceCapable,
      * javax.persistence.Entity javax.jdo.annotations.PersistenceAware,...)
