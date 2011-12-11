@@ -266,7 +266,7 @@ class Computable implements ClassPostProcessingCompiler {
                                  final LinkedHashMap<Module, List<VirtualMetadataFile>> moduleBasedMetadataFiles,
                                  final LinkedHashMap<Module, List<VirtualMetadataFile>> moduleBasedAnnotatedClasses)
             throws IOException, IllegalAccessException,
-            InstantiationException, InvocationTargetException {
+            InstantiationException, InvocationTargetException, NoSuchFieldException {
 
         int count = 0;
         for (final Module module : affectedModules) {
@@ -332,7 +332,7 @@ class Computable implements ClassPostProcessingCompiler {
             IllegalAccessException,
             InstantiationException,
             InvocationTargetException,
-            NoSuchMethodException {
+            NoSuchMethodException, NoSuchFieldException {
 
         //
         // what to enhance

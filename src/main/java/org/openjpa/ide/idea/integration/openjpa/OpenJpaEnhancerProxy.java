@@ -23,16 +23,22 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
 
     private boolean addDefaultConstructor;
     private static final String OPTION_ADD_DEFAULT_CONSTRUCTOR = "addDefaultConstructor";
-    private boolean enforcePropertyRestrictions;
+    //
     private static final String OPTION_ENFORCE_PROPERTY_RESTRICTION = "enforcePropertyRestrictions";
-    private static final String OPTION_USE_TMP_CLASSLOADER = "tmpClassLoader";
+    private boolean enforcePropertyRestrictions;
+    //
+    private static final String OPTION_USE_TMP_CLASSLOADER = "tcl";
+    private boolean tmpClassLoader = true;
 
 
+    private final Class<?> configClass;
     private final Class<?> enhancerClass;
     private final Class<?> optionsClass;
+    private final Class<?> configParamClass;
 
     private List<String> classes = new ArrayList<String>();
 
+    final ClassLoader classLoader;
 
     @SuppressWarnings("UnusedParameters")
     public OpenJpaEnhancerProxy(final PersistenceApi api,
@@ -48,9 +54,13 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
 
         super(api, compileContext, module, persistenceUnitName);
 
-        final ClassLoader classLoader = ClassLoaderFactory.newClassLoader(compileContext, module, OpenJpaEnhancerProxy.class);
+
+        classLoader = ClassLoaderFactory.newClassLoader(compileContext, module, OpenJpaEnhancerProxy.class);
         enhancerClass = Class.forName(OPEN_JPA_GENERIC_ENHANCER_CLASS_FQ, true, classLoader);
         optionsClass = Class.forName("org.apache.openjpa.lib.util.Options", true, classLoader);
+        configParamClass = Class.forName("org.apache.openjpa.conf.OpenJPAConfiguration", true, classLoader);
+        configClass = Class.forName("org.apache.openjpa.conf.OpenJPAConfigurationImpl", true, classLoader);
+
 
     }
 
@@ -65,6 +75,26 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
         return options;
     }
 
+    private Object createConfig() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        Object config = configClass.newInstance();
+        Method setSpecification = configClass.getMethod("setSpecification", String.class);
+        setSpecification.invoke(config, "jpa");
+        return config;
+    }
+
+    private Object createFlags() throws IllegalAccessException, InstantiationException, NoSuchFieldException {
+        /*Object flags = flagsClass.newInstance();
+        Field addDefaultConstructorField = flagsClass.getField(OPTION_ADD_DEFAULT_CONSTRUCTOR);
+        addDefaultConstructorField.set(flags, addDefaultConstructor);
+        Field tmpClassLoaderField = flagsClass.getField(OPTION_USE_TMP_CLASSLOADER);
+        tmpClassLoaderField.set(flags, tmpClassLoader);
+        Field enforcePropertyRestrictionsField = flagsClass.getField(OPTION_ENFORCE_PROPERTY_RESTRICTION);
+        enforcePropertyRestrictionsField.set(flags, enforcePropertyRestrictions);
+        return flags;*/
+        return null;
+    }
+
+
     @Override
     public void addClasses(final String... classNames) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         classes.addAll(Arrays.asList(classNames));
@@ -76,17 +106,24 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
     }
 
     @Override
-    public int enhance() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
+    public int enhance() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, NoSuchFieldException, ClassNotFoundException {
 
         Object options = createOptions();
+        Object jpaConfig = createConfig();
+        //Object flags = createFlags();
         String[] args = classes.toArray(new String[classes.size()]);
-        Method method = enhancerClass.getMethod("run", String[].class, options.getClass());
-        Object done = method.invoke(null, args, options);
+        //OpenJPAConfiguration
+
+        Method method = enhancerClass.getMethod("run", configParamClass, String[].class, options.getClass());
+
+        Boolean done = (Boolean) method.invoke(null, jpaConfig, args, options);
         //boolean done = PCEnhancer.run(args, (Options) options);
-        if (done != null) {
+        if (done) {
             return classes.size();
         }
         return 0;
+
+
     }
 
 
@@ -96,6 +133,10 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
 
     public void setEnforcePropertyRestrictions(boolean enforcePropertyRestrictions) {
         this.enforcePropertyRestrictions = enforcePropertyRestrictions;
+    }
+
+    public void setTmpClassLoader(boolean tmpClassLoader) {
+        this.tmpClassLoader = tmpClassLoader;
     }
 
     @Override
