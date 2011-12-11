@@ -41,7 +41,6 @@ public class EnhancerSupportOpenJpa extends AbstractEnhancerSupport {
     @Override
     @NotNull
     public String[] getEnhancerClassNames() {
-
         return new String[]{OpenJpaEnhancerProxy.OPEN_JPA_ENHANCER_CLASS};
     }
 
