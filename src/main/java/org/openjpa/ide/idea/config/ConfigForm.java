@@ -67,6 +67,8 @@ public class ConfigForm {
     private JRadioButton jPARadioButton;
 
     private JComboBox persistenceImplComboBox;
+    private JCheckBox addDefaultConstructor;
+    private JCheckBox enforcePropertyRestrictions;
 
     //
     // Interface with ProjectComponent
