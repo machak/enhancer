@@ -24,7 +24,7 @@ public interface EnhancerSupport {
      * @return Enhancer support name
      */
     @NotNull
-    public String getId();
+    String getId();
 
     /**
      * The name to display in the configuration dialog enhancer support drop-down.
@@ -32,7 +32,7 @@ public interface EnhancerSupport {
      * @return Enhancer support name
      */
     @NotNull
-    public String getName();
+    String getName();
 
     /**
      * API's supported by this enhancer integration, also see {@link org.openjpa.ide.idea.PersistenceApi}.
@@ -40,7 +40,7 @@ public interface EnhancerSupport {
      * @return supported API's
      */
     @NotNull
-    public PersistenceApi[] getPersistenceApis();
+    PersistenceApi[] getPersistenceApis();
 
     /**
      * Checks if provided persistence api is supported by actual enhancer integration.
@@ -48,7 +48,7 @@ public interface EnhancerSupport {
      * @param persistenceApi the api to check support for
      * @return true if supported
      */
-    public boolean isSupported(PersistenceApi persistenceApi);
+    boolean isSupported(PersistenceApi persistenceApi);
 
     /**
      * Get the class name of the enhancer proxy.<br/>
@@ -58,7 +58,7 @@ public interface EnhancerSupport {
      * @return the proxy class
      */
     @NotNull
-    public Class<?> getEnhancerProxyClass();
+    Class<?> getEnhancerProxyClass();
 
     /**
      * Get the default persistence api.
@@ -66,7 +66,7 @@ public interface EnhancerSupport {
      * @return .
      */
     @NotNull
-    public PersistenceApi getDefaultPersistenceApi();
+    PersistenceApi getDefaultPersistenceApi();
 
     /**
      * Persistence implementations may use different enhancer classes per API.<br/>
@@ -77,7 +77,7 @@ public interface EnhancerSupport {
      * @return Array of fully qualified enhancer class names
      */
     @NotNull
-    public String[] getEnhancerClassNames();
+    String[] getEnhancerClassNames();
 
     /**
      * Annotations this enhancer implementation supports.
@@ -85,7 +85,7 @@ public interface EnhancerSupport {
      * @return List of fully qualified annotation class names
      */
     @NotNull
-    public List<String> getAnnotationNames();
+    List<String> getAnnotationNames();
 
     /**
      * Interface every enhancer proxy has to implement, see {@link org.openjpa.ide.idea.integration.EnhancerProxy}.
@@ -102,10 +102,10 @@ public interface EnhancerSupport {
      * @throws InstantiationException .
      */
     @NotNull
-    public EnhancerProxy newEnhancerProxy(PersistenceApi api,
-                                          CompileContext compileCtx,
-                                          Module module,
-                                          @Nullable String persistenceUnitName)
+    EnhancerProxy newEnhancerProxy(PersistenceApi api,
+                                   CompileContext compileCtx,
+                                   Module module,
+                                   @Nullable String persistenceUnitName)
             throws NoSuchMethodException,
             InvocationTargetException,
             IllegalAccessException,

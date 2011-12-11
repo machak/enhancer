@@ -36,7 +36,7 @@ public interface EnhancerProxy {
      * @throws IllegalAccessException    .
      * @throws NoSuchMethodException     .
      */
-    public void addClasses(String... classNames) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+    void addClasses(String... classNames) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
     /**
      * Add paths (full path) of files containing xml metadata for classes to
@@ -47,7 +47,7 @@ public interface EnhancerProxy {
      * @throws IllegalAccessException    .
      * @throws NoSuchMethodException     .
      */
-    public void addMetadataFiles(String... metadataFiles) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+    void addMetadataFiles(String... metadataFiles) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
 
     /**
      * Start enhancement of added classes and metadata files.<br/>
@@ -60,6 +60,6 @@ public interface EnhancerProxy {
      * @throws NoSuchMethodException     .
      * @throws ClassNotFoundException    .
      */
-    public int enhance() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException, InstantiationException, NoSuchFieldException;
+    int enhance() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException, InstantiationException, NoSuchFieldException;
 
 }
