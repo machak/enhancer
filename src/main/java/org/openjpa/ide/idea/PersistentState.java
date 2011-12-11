@@ -26,6 +26,7 @@ public class PersistentState { // has to be public (for IDEA configuration acces
     private boolean includeTestClasses = true;
     private boolean addDefaultConstructor = true;
     private boolean enforcePropertyRestrictions = true;
+    private boolean tmpClassLoader = true;
 
     private Collection<String> enabledModules = new ArrayList<String>();
 
@@ -122,6 +123,14 @@ public class PersistentState { // has to be public (for IDEA configuration acces
         this.enforcePropertyRestrictions = enforcePropertyRestrictions;
     }
 
+    public boolean isTmpClassLoader() {
+        return tmpClassLoader;
+    }
+
+    public void setTmpClassLoader(boolean tmpClassLoader) {
+        this.tmpClassLoader = tmpClassLoader;
+    }
+
     /**
      * Copy method used to update persistent state with plugin's internal state.
      *
@@ -142,6 +151,7 @@ public class PersistentState { // has to be public (for IDEA configuration acces
         this.includeTestClasses = state.isIncludeTestClasses();
         this.addDefaultConstructor = state.isAddDefaultConstructor();
         this.enforcePropertyRestrictions = state.isEnforcePropertyRestrictions();
+        this.tmpClassLoader = state.isTmpClassLoader();
 
         if (this.enabledModules == null) {
             this.enabledModules = new ArrayList<String>();

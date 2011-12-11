@@ -27,6 +27,9 @@ public interface EnhancerProxy {
 
     void setEnforcePropertyRestrictions(boolean enforcePropertyRestrictions);
 
+
+    void setTmpClassLoader(boolean addDefaultConstructor);
+
     /**
      * Add names of classes annotated by persistence related annotations (e.g. javax.jdo.annotations.PersistenceCapable,
      * javax.persistence.Entity javax.jdo.annotations.PersistenceAware,...)

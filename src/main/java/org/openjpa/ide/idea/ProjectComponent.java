@@ -243,6 +243,7 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
         final boolean includeTestClasses = this.state.isIncludeTestClasses();
         final boolean addDefaultConstructor = this.state.isAddDefaultConstructor();
         final boolean enforcePropertyRestrictions = this.state.isEnforcePropertyRestrictions();
+        final boolean tmpClassLoader = this.state.isTmpClassLoader();
         final boolean enhancerInitialized = this.dNEComputable != null;
         final PersistenceApi api = this.state.getApi();
         final EnhancerSupport enhancerSupport = this.state.getEnhancerSupport();
@@ -270,6 +271,7 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
                 includeTestClasses,
                 addDefaultConstructor,
                 enforcePropertyRestrictions,
+                tmpClassLoader,
                 enhancerInitialized,
                 api,
                 this.state.getEnhancerSupportRegistry(),
@@ -297,6 +299,7 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
         final boolean includeTestClasses = guiState.isIncludeTestClasses();
         final boolean addDefaultConstructor = guiState.isAddDefaultConstructor();
         final boolean enforcePropertyRestrictions = guiState.isEnforcePropertyRestrictions();
+        final boolean tmpClassLoader = guiState.isTmpClassLoader();
         final PersistenceApi api = guiState.getApi();
         final EnhancerSupport enhancerSupport = guiState.getEnhancerSupport();
         final Set<String> enabledFiles = getEnabledFilesFromGuiModel(guiState.getMetadataFiles());
@@ -308,6 +311,7 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
                         includeTestClasses,
                         addDefaultConstructor,
                         enforcePropertyRestrictions,
+                        tmpClassLoader,
                         enabledModules,
                         enabledFiles,
                         api,

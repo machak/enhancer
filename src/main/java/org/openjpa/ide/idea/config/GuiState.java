@@ -30,6 +30,8 @@ public class GuiState {
 
     private boolean enforcePropertyRestrictions = true;
 
+    private boolean tmpClassLoader = true;
+
     private boolean enhancerInitialized = false;
 
     private PersistenceApi api;
@@ -55,6 +57,7 @@ public class GuiState {
                 "jpa",
                 true,
                 true,
+                true,
                 false,
                 true,
                 true,
@@ -73,6 +76,7 @@ public class GuiState {
                     final boolean includeTestClasses,
                     final boolean addDefaultConstructor,
                     final boolean enforcePropertyRestrictions,
+                    final boolean tmpClassLoader,
                     final boolean enhancerInitialized,
                     final PersistenceApi api,
                     final EnhancerSupportRegistry enhancerSupportRegistry,
@@ -88,6 +92,7 @@ public class GuiState {
         this.includeTestClasses = includeTestClasses;
         this.addDefaultConstructor = addDefaultConstructor;
         this.enforcePropertyRestrictions = enforcePropertyRestrictions;
+        this.tmpClassLoader = tmpClassLoader;
         this.enhancerInitialized = enhancerInitialized;
         this.api = api;
         this.enhancerSupportRegistry = enhancerSupportRegistry;
@@ -105,6 +110,7 @@ public class GuiState {
                 data.isIncludeTestClasses(),
                 data.isAddDefaultConstructor(),
                 data.isEnforcePropertyRestrictions(),
+                data.isTmpClassLoader(),
                 data.isEnhancerInitialized(),
                 data.getApi(),
                 data.getEnhancerSupportRegistry(),
@@ -231,6 +237,14 @@ public class GuiState {
 
     public void setEnforcePropertyRestrictions(boolean enforcePropertyRestrictions) {
         this.enforcePropertyRestrictions = enforcePropertyRestrictions;
+    }
+
+    public boolean isTmpClassLoader() {
+        return tmpClassLoader;
+    }
+
+    public void setTmpClassLoader(boolean tmpClassLoader) {
+        this.tmpClassLoader = tmpClassLoader;
     }
 
 

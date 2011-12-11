@@ -71,7 +71,7 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
         Method method = optionsClass.getMethod("setProperty", String.class, boolean.class);
         method.invoke(options, OPTION_ADD_DEFAULT_CONSTRUCTOR, addDefaultConstructor);
         method.invoke(options, OPTION_ENFORCE_PROPERTY_RESTRICTION, enforcePropertyRestrictions);
-        method.invoke(options, OPTION_USE_TMP_CLASSLOADER, false);
+        method.invoke(options, OPTION_USE_TMP_CLASSLOADER, tmpClassLoader);
         return options;
     }
 
@@ -80,18 +80,6 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
         Method setSpecification = configClass.getMethod("setSpecification", String.class);
         setSpecification.invoke(config, "jpa");
         return config;
-    }
-
-    private Object createFlags() throws IllegalAccessException, InstantiationException, NoSuchFieldException {
-        /*Object flags = flagsClass.newInstance();
-        Field addDefaultConstructorField = flagsClass.getField(OPTION_ADD_DEFAULT_CONSTRUCTOR);
-        addDefaultConstructorField.set(flags, addDefaultConstructor);
-        Field tmpClassLoaderField = flagsClass.getField(OPTION_USE_TMP_CLASSLOADER);
-        tmpClassLoaderField.set(flags, tmpClassLoader);
-        Field enforcePropertyRestrictionsField = flagsClass.getField(OPTION_ENFORCE_PROPERTY_RESTRICTION);
-        enforcePropertyRestrictionsField.set(flags, enforcePropertyRestrictions);
-        return flags;*/
-        return null;
     }
 
 
@@ -110,14 +98,10 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
 
         Object options = createOptions();
         Object jpaConfig = createConfig();
-        //Object flags = createFlags();
         String[] args = classes.toArray(new String[classes.size()]);
-        //OpenJPAConfiguration
-
         Method method = enhancerClass.getMethod("run", configParamClass, String[].class, options.getClass());
 
         Boolean done = (Boolean) method.invoke(null, jpaConfig, args, options);
-        //boolean done = PCEnhancer.run(args, (Options) options);
         if (done) {
             return classes.size();
         }

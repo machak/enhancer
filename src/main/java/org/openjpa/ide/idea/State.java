@@ -26,6 +26,8 @@ public class State {
 
     private boolean enforcePropertyRestrictions = true;
 
+    private boolean tmpClassLoader = true;
+
     private Set<String> enabledModules = new HashSet<String>();
 
     private Set<String> enabledFiles = new HashSet<String>();
@@ -45,6 +47,7 @@ public class State {
                  final boolean includeTestClasses,
                  final boolean addDefaultConstructor,
                  final boolean enforcePropertyRestrictions,
+                 final boolean tmpClassLoader,
                  final Set<String> enabledModules,
                  final Set<String> enabledFiles,
                  final PersistenceApi api,
@@ -55,6 +58,7 @@ public class State {
         this.includeTestClasses = includeTestClasses;
         this.addDefaultConstructor = addDefaultConstructor;
         this.enforcePropertyRestrictions = enforcePropertyRestrictions;
+        this.tmpClassLoader = tmpClassLoader;
         this.enabledModules = new LinkedHashSet<String>(enabledModules);
         this.enabledFiles = new LinkedHashSet<String>(enabledFiles);
         this.api = api;
@@ -111,6 +115,15 @@ public class State {
 
     public void setEnforcePropertyRestrictions(boolean enforcePropertyRestrictions) {
         this.enforcePropertyRestrictions = enforcePropertyRestrictions;
+    }
+
+
+    public boolean isTmpClassLoader() {
+        return tmpClassLoader;
+    }
+
+    public void setTmpClassLoader(boolean tmpClassLoader) {
+        this.tmpClassLoader = tmpClassLoader;
     }
 
     public Set<String> getEnabledModules() {
@@ -179,6 +192,7 @@ public class State {
         this.includeTestClasses = state.includeTestClasses;
         this.addDefaultConstructor = state.addDefaultConstructor;
         this.enforcePropertyRestrictions = state.enforcePropertyRestrictions;
+        this.tmpClassLoader = state.tmpClassLoader;
         this.setEnabledModules(state.enabledModules);
         this.setEnabledFiles(state.enabledFiles);
         this.setApi(state.api);
@@ -205,6 +219,7 @@ public class State {
         this.includeTestClasses = state.isIncludeTestClasses();
         this.addDefaultConstructor = state.isAddDefaultConstructor();
         this.enforcePropertyRestrictions = state.isEnforcePropertyRestrictions();
+        this.tmpClassLoader = state.isTmpClassLoader();
 
         final Collection<String> enabledModules1 = state.getEnabledModules();
         if (enabledModules1 == null || enabledModules1.isEmpty()) {

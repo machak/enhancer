@@ -69,6 +69,7 @@ public class ConfigForm {
     private JComboBox persistenceImplComboBox;
     private JCheckBox addDefaultConstructor;
     private JCheckBox enforcePropertyRestrictions;
+    private JCheckBox tmpClassLoader;
 
     //
     // Interface with ProjectComponent
@@ -97,6 +98,9 @@ public class ConfigForm {
             return true;
         }
         if (this.enforcePropertyRestrictions.isSelected() != data.isEnforcePropertyRestrictions()) {
+            return true;
+        }
+        if (this.tmpClassLoader.isSelected() != data.isTmpClassLoader()) {
             return true;
         }
         if (!this.hibernateRadioButton.isSelected() && PersistenceApi.HIBERNATE == data.getApi()) {
@@ -388,6 +392,7 @@ public class ConfigForm {
         this.includeTestClassesCheckBox.setSelected(data.isIncludeTestClasses());
         this.addDefaultConstructor.setSelected(data.isAddDefaultConstructor());
         this.enforcePropertyRestrictions.setSelected(data.isEnforcePropertyRestrictions());
+        this.tmpClassLoader.setSelected(data.isTmpClassLoader());
 
         //
         // Panel displaying an info message if enhancer is not initialized
@@ -439,6 +444,7 @@ public class ConfigForm {
         data.setIncludeTestClasses(this.includeTestClassesCheckBox.isSelected());
         data.setAddDefaultConstructor(this.addDefaultConstructor.isSelected());
         data.setEnforcePropertyRestrictions(this.enforcePropertyRestrictions.isSelected());
+        data.setTmpClassLoader(this.tmpClassLoader.isSelected());
 
         final EnhancerSupport enhancerSupport = getByEnhancerSupportName(data, (String) this.persistenceImplComboBox.getSelectedItem());
         data.setEnhancerSupport(enhancerSupport);
