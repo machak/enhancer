@@ -24,6 +24,8 @@ public class PersistentState { // has to be public (for IDEA configuration acces
     private boolean addToCompilerResourcePatterns = true;
 
     private boolean includeTestClasses = true;
+    private boolean addDefaultConstructor = true;
+    private boolean enforcePropertyRestrictions = true;
 
     private Collection<String> enabledModules = new ArrayList<String>();
 
@@ -103,6 +105,23 @@ public class PersistentState { // has to be public (for IDEA configuration acces
         this.enhancerSupport = enhancerSupport;
     }
 
+
+    public boolean isAddDefaultConstructor() {
+        return addDefaultConstructor;
+    }
+
+    public void setAddDefaultConstructor(boolean addDefaultConstructor) {
+        this.addDefaultConstructor = addDefaultConstructor;
+    }
+
+    public boolean isEnforcePropertyRestrictions() {
+        return enforcePropertyRestrictions;
+    }
+
+    public void setEnforcePropertyRestrictions(boolean enforcePropertyRestrictions) {
+        this.enforcePropertyRestrictions = enforcePropertyRestrictions;
+    }
+
     /**
      * Copy method used to update persistent state with plugin's internal state.
      *
@@ -121,6 +140,8 @@ public class PersistentState { // has to be public (for IDEA configuration acces
         this.metaDataExtensions.addAll(state.getMetaDataExtensions());
 
         this.includeTestClasses = state.isIncludeTestClasses();
+        this.addDefaultConstructor = state.isAddDefaultConstructor();
+        this.enforcePropertyRestrictions = state.isEnforcePropertyRestrictions();
 
         if (this.enabledModules == null) {
             this.enabledModules = new ArrayList<String>();

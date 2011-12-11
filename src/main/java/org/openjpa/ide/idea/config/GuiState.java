@@ -26,6 +26,10 @@ public class GuiState {
 
     private boolean includeTestClasses = true;
 
+    private boolean addDefaultConstructor = true;
+
+    private boolean enforcePropertyRestrictions = true;
+
     private boolean enhancerInitialized = false;
 
     private PersistenceApi api;
@@ -52,6 +56,8 @@ public class GuiState {
                 true,
                 true,
                 false,
+                true,
+                true,
                 PersistenceApi.HIBERNATE,
                 enhancerSupportRegistry,
                 enhancerSupportRegistry.getDefaultEnhancerSupport(),
@@ -65,6 +71,8 @@ public class GuiState {
                     final String metaDataExtensions,
                     final boolean addToCompilerResourcePatterns,
                     final boolean includeTestClasses,
+                    final boolean addDefaultConstructor,
+                    final boolean enforcePropertyRestrictions,
                     final boolean enhancerInitialized,
                     final PersistenceApi api,
                     final EnhancerSupportRegistry enhancerSupportRegistry,
@@ -78,6 +86,8 @@ public class GuiState {
         this.metaDataExtensions = metaDataExtensions;
         this.addToCompilerResourcePatterns = addToCompilerResourcePatterns;
         this.includeTestClasses = includeTestClasses;
+        this.addDefaultConstructor = addDefaultConstructor;
+        this.enforcePropertyRestrictions = enforcePropertyRestrictions;
         this.enhancerInitialized = enhancerInitialized;
         this.api = api;
         this.enhancerSupportRegistry = enhancerSupportRegistry;
@@ -93,6 +103,8 @@ public class GuiState {
                 data.getMetaDataExtensions(),
                 data.isAddToCompilerResourcePatterns(),
                 data.isIncludeTestClasses(),
+                data.isAddDefaultConstructor(),
+                data.isEnforcePropertyRestrictions(),
                 data.isEnhancerInitialized(),
                 data.getApi(),
                 data.getEnhancerSupportRegistry(),
@@ -204,6 +216,23 @@ public class GuiState {
     public List<MetaDataOrClassFile> getAnnotatedClassFiles() {
         return new ArrayList<MetaDataOrClassFile>(this.annotatedClassFiles);
     }
+
+    public boolean isAddDefaultConstructor() {
+        return addDefaultConstructor;
+    }
+
+    public void setAddDefaultConstructor(boolean addDefaultConstructor) {
+        this.addDefaultConstructor = addDefaultConstructor;
+    }
+
+    public boolean isEnforcePropertyRestrictions() {
+        return enforcePropertyRestrictions;
+    }
+
+    public void setEnforcePropertyRestrictions(boolean enforcePropertyRestrictions) {
+        this.enforcePropertyRestrictions = enforcePropertyRestrictions;
+    }
+
 
     //
     // java.lang.Object overrides

@@ -93,6 +93,12 @@ public class ConfigForm {
         if (this.includeTestClassesCheckBox.isSelected() != data.isIncludeTestClasses()) {
             return true;
         }
+        if (this.addDefaultConstructor.isSelected() != data.isAddDefaultConstructor()) {
+            return true;
+        }
+        if (this.enforcePropertyRestrictions.isSelected() != data.isEnforcePropertyRestrictions()) {
+            return true;
+        }
         if (!this.hibernateRadioButton.isSelected() && PersistenceApi.HIBERNATE == data.getApi()) {
             return true;
         }
@@ -380,6 +386,8 @@ public class ConfigForm {
         //
         // Test classes inclusion
         this.includeTestClassesCheckBox.setSelected(data.isIncludeTestClasses());
+        this.addDefaultConstructor.setSelected(data.isAddDefaultConstructor());
+        this.enforcePropertyRestrictions.setSelected(data.isEnforcePropertyRestrictions());
 
         //
         // Panel displaying an info message if enhancer is not initialized
@@ -429,6 +437,8 @@ public class ConfigForm {
         data.setEnhancerEnabled(this.enableEnhancerCheckBox.isSelected());
 
         data.setIncludeTestClasses(this.includeTestClassesCheckBox.isSelected());
+        data.setAddDefaultConstructor(this.addDefaultConstructor.isSelected());
+        data.setEnforcePropertyRestrictions(this.enforcePropertyRestrictions.isSelected());
 
         final EnhancerSupport enhancerSupport = getByEnhancerSupportName(data, (String) this.persistenceImplComboBox.getSelectedItem());
         data.setEnhancerSupport(enhancerSupport);

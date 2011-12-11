@@ -22,6 +22,10 @@ public class State {
 
     private boolean includeTestClasses = true;
 
+    private boolean addDefaultConstructor = true;
+
+    private boolean enforcePropertyRestrictions = true;
+
     private Set<String> enabledModules = new HashSet<String>();
 
     private Set<String> enabledFiles = new HashSet<String>();
@@ -39,6 +43,8 @@ public class State {
                  final Set<String> metaDataExtensions,
                  final boolean addToCompilerResourcePatterns,
                  final boolean includeTestClasses,
+                 final boolean addDefaultConstructor,
+                 final boolean enforcePropertyRestrictions,
                  final Set<String> enabledModules,
                  final Set<String> enabledFiles,
                  final PersistenceApi api,
@@ -47,6 +53,8 @@ public class State {
         this.metaDataExtensions = new LinkedHashSet<String>(metaDataExtensions);
         this.addToCompilerResourcePatterns = addToCompilerResourcePatterns;
         this.includeTestClasses = includeTestClasses;
+        this.addDefaultConstructor = addDefaultConstructor;
+        this.enforcePropertyRestrictions = enforcePropertyRestrictions;
         this.enabledModules = new LinkedHashSet<String>(enabledModules);
         this.enabledFiles = new LinkedHashSet<String>(enabledFiles);
         this.api = api;
@@ -86,6 +94,23 @@ public class State {
 
     public void setIncludeTestClasses(final boolean includeTestClasses) {
         this.includeTestClasses = includeTestClasses;
+    }
+
+
+    public boolean isAddDefaultConstructor() {
+        return addDefaultConstructor;
+    }
+
+    public void setAddDefaultConstructor(boolean addDefaultConstructor) {
+        this.addDefaultConstructor = addDefaultConstructor;
+    }
+
+    public boolean isEnforcePropertyRestrictions() {
+        return enforcePropertyRestrictions;
+    }
+
+    public void setEnforcePropertyRestrictions(boolean enforcePropertyRestrictions) {
+        this.enforcePropertyRestrictions = enforcePropertyRestrictions;
     }
 
     public Set<String> getEnabledModules() {
@@ -152,6 +177,8 @@ public class State {
         this.setMetaDataExtensions(state.metaDataExtensions);
         this.setAddToCompilerResourcePatterns(state.addToCompilerResourcePatterns);
         this.includeTestClasses = state.includeTestClasses;
+        this.addDefaultConstructor = state.addDefaultConstructor;
+        this.enforcePropertyRestrictions = state.enforcePropertyRestrictions;
         this.setEnabledModules(state.enabledModules);
         this.setEnabledFiles(state.enabledFiles);
         this.setApi(state.api);
@@ -176,6 +203,8 @@ public class State {
 
         this.addToCompilerResourcePatterns = state.isAddToCompilerResourcePatterns();
         this.includeTestClasses = state.isIncludeTestClasses();
+        this.addDefaultConstructor = state.isAddDefaultConstructor();
+        this.enforcePropertyRestrictions = state.isEnforcePropertyRestrictions();
 
         final Collection<String> enabledModules1 = state.getEnabledModules();
         if (enabledModules1 == null || enabledModules1.isEmpty()) {

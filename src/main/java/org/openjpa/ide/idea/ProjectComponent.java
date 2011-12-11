@@ -241,6 +241,8 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
         final String metaDataExtension = getMetaDataExtensionsString(this.state.getMetaDataExtensions());
         final boolean addToCompilerResourcePatterns = this.state.isAddToCompilerResourcePatterns();
         final boolean includeTestClasses = this.state.isIncludeTestClasses();
+        final boolean addDefaultConstructor = this.state.isAddDefaultConstructor();
+        final boolean enforcePropertyRestrictions = this.state.isEnforcePropertyRestrictions();
         final boolean enhancerInitialized = this.dNEComputable != null;
         final PersistenceApi api = this.state.getApi();
         final EnhancerSupport enhancerSupport = this.state.getEnhancerSupport();
@@ -264,6 +266,8 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
                 metaDataExtension,
                 addToCompilerResourcePatterns,
                 includeTestClasses,
+                addDefaultConstructor,
+                enforcePropertyRestrictions,
                 enhancerInitialized,
                 api,
                 this.state.getEnhancerSupportRegistry(),
@@ -289,6 +293,8 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
         final LinkedHashSet<String> metaDataExtensions = getMetaDataExtensionsSet(guiState.getMetaDataExtensions());
         final boolean addToCompilerResourcePatterns = guiState.isAddToCompilerResourcePatterns();
         final boolean includeTestClasses = guiState.isIncludeTestClasses();
+        final boolean addDefaultConstructor = guiState.isAddDefaultConstructor();
+        final boolean enforcePropertyRestrictions = guiState.isEnforcePropertyRestrictions();
         final PersistenceApi api = guiState.getApi();
         final EnhancerSupport enhancerSupport = guiState.getEnhancerSupport();
         final Set<String> enabledFiles = getEnabledFilesFromGuiModel(guiState.getMetadataFiles());
@@ -298,6 +304,8 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
                         metaDataExtensions,
                         addToCompilerResourcePatterns,
                         includeTestClasses,
+                        addDefaultConstructor,
+                        enforcePropertyRestrictions,
                         enabledModules,
                         enabledFiles,
                         api,
