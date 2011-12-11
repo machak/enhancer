@@ -1,7 +1,6 @@
 package org.openjpa.ide.idea.integration.openjpa;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +62,7 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
 
     @Override
     public int enhance() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+
         return 0;
     }
 
@@ -71,13 +71,5 @@ public class OpenJpaEnhancerProxy extends AbstractEnhancerProxy {
         return "OpenJpaEnhancerProxy";
     }
 
-
-    private static Object convertVarargsParameter(final String[] metadataFiles) {
-        final Object parameter = Array.newInstance(String.class, metadataFiles.length);
-        for (int i = 0; i < metadataFiles.length; ++i) {
-            Array.set(parameter, i, metadataFiles[i]);
-        }
-        return parameter;
-    }
 
 }

@@ -441,6 +441,7 @@ class Computable implements ClassPostProcessingCompiler {
                         ? CompilerManager.getInstance(Computable.this.project).createProjectCompileScope(Computable.this.project)
                         : compileScope;
 
+                final Set<String> enabledFiles = Computable.this.state.getEnabledFiles();
                 for (final Module module : projectCompileScope.getAffectedModules()) {
                     if (Computable.this.state.getEnabledModules() != null && Computable.this.state.getEnabledModules()
                             .contains(module.getName())) {
@@ -465,12 +466,15 @@ class Computable implements ClassPostProcessingCompiler {
                                     // convert psi classes to class files in output path
                                     for (final PsiClass annotatedClass : annotatedClasses) {
                                         final String pcClassName = annotatedClass.getQualifiedName();
+                                        // skip disabled files
+                                        if (!enabledFiles.contains(pcClassName)) {
+                                            continue;
+                                        }
                                         // convert to path
                                         final String pcClassPath = IdeaProjectUtils.packageToPath(pcClassName) + ".class";
                                         // find file in output path
                                         final VirtualFile pcClassFile = outputDirectory.findFileByRelativePath(pcClassPath);
                                         if (pcClassFile != null && pcClassFile.exists()) {
-
                                             moduleFiles
                                                     .add(new VirtualMetadataFile(module, true, pcClassFile,
                                                             Collections.singletonList(pcClassName),
