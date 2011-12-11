@@ -60,6 +60,6 @@ public interface EnhancerProxy {
      * @throws NoSuchMethodException     .
      * @throws ClassNotFoundException    .
      */
-    public int enhance() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException;
+    public int enhance() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException, InstantiationException;
 
 }
