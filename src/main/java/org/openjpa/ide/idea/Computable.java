@@ -18,15 +18,7 @@ import java.util.Set;
 
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.compiler.ClassPostProcessingCompiler;
-import com.intellij.openapi.compiler.CompileContext;
-import com.intellij.openapi.compiler.CompileScope;
-import com.intellij.openapi.compiler.CompilerManager;
-import com.intellij.openapi.compiler.CompilerMessageCategory;
-import com.intellij.openapi.compiler.CompilerPaths;
-import com.intellij.openapi.compiler.FileProcessingCompiler;
-import com.intellij.openapi.compiler.TimestampValidityState;
-import com.intellij.openapi.compiler.ValidityState;
+import com.intellij.openapi.compiler.*;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.project.Project;
@@ -51,7 +43,7 @@ import org.openjpa.ide.idea.integration.EnhancerSupport;
  * <br>
  * Failure stacktraces are transformed into strings and written to the idea messages output.
  */
-class Computable implements ClassPostProcessingCompiler {
+class Computable implements SourceInstrumentingCompiler {
 
     private static final FileProcessingCompiler.ProcessingItem[] EMPTY_PROCESSING_ITEMS = new FileProcessingCompiler.ProcessingItem[0];
 

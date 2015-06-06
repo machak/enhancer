@@ -1,6 +1,6 @@
 echo "installing dependencies"
 IDEA_HOME=/home/machak/idea11
-IDEA_VERSION=IDEA-IU-111.63
+IDEA_VERSION=IDEA-IU-135.690
 IDEA_GROUP_ID=com.intellij
 
 mvn install:install-file -DgroupId=${IDEA_GROUP_ID} -Dpackaging=jar -Dfile="${IDEA_HOME}/lib/openapi.jar" -DartifactId=openapi -Dversion=${IDEA_VERSION}
