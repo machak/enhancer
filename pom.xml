@@ -92,7 +92,7 @@
       <resource>
         <targetPath>META-INF</targetPath>
         <filtering>false</filtering>
-        <directory>${basedir}/src/main/resources/META-INF</directory>
+        <directory>META-INF</directory>
         <excludes>
           <exclude>MANIFEST.MF</exclude>
         </excludes>
