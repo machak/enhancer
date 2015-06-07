@@ -460,7 +460,7 @@ class Computable implements SourceInstrumentingCompiler {
                                 if (outputDirectory == null) {
 
                                 } else {
-                                    outputDirectory.refresh(false, true);
+                                    outputDirectory.refresh(true, true);
                                     final List<VirtualMetadataFile> moduleFiles = new LinkedList<VirtualMetadataFile>();
                                     // convert psi classes to class files in output path
                                     for (final PsiClass annotatedClass : annotatedClasses) {
