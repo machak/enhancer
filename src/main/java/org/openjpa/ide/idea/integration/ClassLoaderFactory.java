@@ -5,14 +5,18 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import com.intellij.openapi.compiler.CompileContext;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.roots.ProjectRootsTraversing;
+import com.intellij.openapi.roots.*;
+import com.intellij.openapi.roots.libraries.Library;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.PathsList;
+import com.intellij.util.Processor;
 import com.intellij.util.lang.UrlClassLoader;
 
 /**
@@ -43,18 +47,31 @@ public abstract class ClassLoaderFactory {
         final UrlClassLoader loader = (UrlClassLoader) (proxyClass == null ? ClassLoaderFactory.class.getClassLoader() : proxyClass.getClassLoader());
         urls.addAll(loader.getUrls());
 
-        for (final VirtualFile vf : compileContext.getAllOutputDirectories()) {
-            final File file = new File(vf.getPath());
-            final File canonicalFile = file.getCanonicalFile();
-            final URI uri = canonicalFile.toURI();
-            final URL url = uri.toURL();
-            urls.add(url);
-        }
+        final VirtualFile vf1 = compileContext.getModuleOutputDirectory(module);
+        final File file = new File(vf1.getPath());
+        final File canonicalFile = file.getCanonicalFile();
+        final URI uri1 = canonicalFile.toURI();
+        final URL url1 = uri1.toURL();
+        urls.add(url1);
 
-        final PathsList paths = ProjectRootsTraversing.collectRoots(module, ProjectRootsTraversing.PROJECT_LIBRARIES);
 
-        for (final VirtualFile vf : paths.getVirtualFiles()) {
-            final File f = new File(vf.getPath());
+        final List<VirtualFile> jars = new ArrayList();
+
+        final List<String> libraryNames = new ArrayList<String>();
+        ModuleRootManager.getInstance(module).orderEntries().forEachLibrary(new Processor<Library>() {
+            @Override
+            public boolean process(Library library) {
+                libraryNames.add(library.getName());
+                VirtualFile[] files = library.getFiles(OrderRootType.CLASSES);
+                for (VirtualFile virtualFile : files) {
+                    jars.add(virtualFile);
+                }
+                return true;
+            }
+        });
+
+        for (final VirtualFile vf : jars) {
+            final File f = new File(vf.getPath().replace(".jar!",".jar"));
             final URI uri = f.toURI();
             final URL url = uri.toURL();
             urls.add(url);

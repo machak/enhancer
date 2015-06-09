@@ -11,7 +11,7 @@
 
 
   <properties>
-    <idea.dependencies.version>IDEA-IU-111.63</idea.dependencies.version>
+    <idea.dependencies.version>IDEA-IU-135.690</idea.dependencies.version>
   </properties>
 
 
@@ -92,7 +92,7 @@
       <resource>
         <targetPath>META-INF</targetPath>
         <filtering>false</filtering>
-        <directory>${basedir}/src/main/resources/META-INF</directory>
+        <directory>META-INF</directory>
         <excludes>
           <exclude>MANIFEST.MF</exclude>
         </excludes>
@@ -102,8 +102,8 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.7</source>
+          <target>1.7</target>
         </configuration>
       </plugin>
 
@@ -129,7 +129,7 @@
           <includePom>true</includePom>
         </configuration>
       </plugin>
-      <plugin>
+      <!--plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>ideauidesigner-maven-plugin</artifactId>
         <version>1.0-beta-1</version>
@@ -173,7 +173,7 @@
           <verbose>true</verbose>
           <failOnError>true</failOnError>
         </configuration>
-      </plugin>
+      </plugin-->
 
     </plugins>
 

@@ -174,11 +174,6 @@ public class ProjectComponent extends AbstractProjectComponent implements Config
     }
 
     @Override
-    public Icon getIcon() {
-        return null;
-    }
-
-    @Override
     public String getHelpTopic() {
         return null;
     }
